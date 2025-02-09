@@ -1,0 +1,7 @@
+Here you should have 'shared' dir, which is a shared app repository.
+So you get:
+- OpenXR809\project\oxr_sharedApp
+- OpenXR809\project\oxr_sharedApp\shared\windowsTest_msvc2008.vcproj
+- OpenXR809\project\oxr_sharedApp\shared\src\new_cfg.c
+- OpenXR809\project\oxr_sharedApp\shared\src\new_pins.c
+Etc etc
