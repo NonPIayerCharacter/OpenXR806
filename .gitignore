@@ -19,7 +19,6 @@
 /project/*/gcc/*.build_log.htm
 /project/*/gcc/mdk_debug/*.uvguix.*
 /out/*
-**/.config
 **/.config.old
 tools/settings_win.ini
 tools/config/mconf
@@ -51,3 +50,4 @@ tools/config/conf
 !/lib/libwpas_wps_hostapd.a
 !/lib/libzbar.a
 !/lib/libwatchpoint.a
+
