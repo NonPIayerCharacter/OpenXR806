@@ -46,7 +46,6 @@
 
 #include "kernel/os/os.h"
 
-int http_basic_auth_run() { return 0; }
 int LWIP_GetActiveSockets() { return 0; }
 int LWIP_GetMaxSockets() { return 0; }
 void HAL_Configure_WDT() {}
