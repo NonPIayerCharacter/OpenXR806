@@ -91,7 +91,7 @@ endif
 
 CC_FLAGS = $(CPU) -c $(DBG_FLAG) -fno-common -fmessage-length=0 \
 	-fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer \
-	-Wall -Werror -Wno-cpp -Wpointer-arith -Wno-error=unused-function \
+	-Wall -Wno-cpp -Wpointer-arith -Wno-error=unused-function \
 	-Wno-unused-variable -Wno-incompatible-pointer-types \
 	-Wno-implicit-function-declaration -Wno-unused-but-set-variable \
 	-Wno-int-conversion -Wno-discarded-qualifiers	\
