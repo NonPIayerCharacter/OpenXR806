@@ -14,8 +14,6 @@
 *.xz
 .project.ld
 .image.cfg
-include/generated/*
-include/config/*
 /project/*/gcc/*.iex
 /project/*/gcc/*.dep
 /project/*/gcc/*.build_log.htm
