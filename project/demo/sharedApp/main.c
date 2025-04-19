@@ -46,6 +46,13 @@
 
 #include "kernel/os/os.h"
 
+int http_basic_auth_run() { return 0; }
+int LWIP_GetActiveSockets() { return 0; }
+int LWIP_GetMaxSockets() { return 0; }
+void HAL_Configure_WDT() {}
+void HAL_Run_WDT() {}
+
+
 
 OSStatus rtos_create_thread( beken_thread_t* thread, 
 							uint8_t priority, const char* name, 
@@ -124,6 +131,18 @@ void bk_printf(char *format, ...){
 }
 void user_main(void);
 void Main_Init(void);
+
+int mainQQQ(void)
+{
+	platform_init();
+
+	while (1) {
+		OS_Sleep(10);
+		printf("Hello world! @ %u sec\n", OS_GetTicks());
+	}
+	return 0;
+}
+
 
 int main(void)
 {

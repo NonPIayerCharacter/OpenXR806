@@ -61,6 +61,7 @@ extern "C" {
 /* Definitions specific to the port being used. */
 #include "portable.h"
 
+
 /* Must be defaulted before configUSE_NEWLIB_REENTRANT is used below. */
 #ifndef configUSE_NEWLIB_REENTRANT
 	#define configUSE_NEWLIB_REENTRANT 0
@@ -885,11 +886,15 @@ extern "C" {
 	#define portTICK_TYPE_CLEAR_INTERRUPT_MASK_FROM_ISR( x ) ( void ) x
 #endif
 
+
 /* Definitions to allow backward compatibility with FreeRTOS versions prior to
 V8 if desired. */
 #ifndef configENABLE_BACKWARD_COMPATIBILITY
 	#define configENABLE_BACKWARD_COMPATIBILITY 1
 #endif
+
+#undef configENABLE_BACKWARD_COMPATIBILITY
+#define configENABLE_BACKWARD_COMPATIBILITY 1
 
 #ifndef configPRINTF
 	/* configPRINTF() was not defined, so define it away to nothing.  To use

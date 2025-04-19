@@ -5,7 +5,7 @@
 # ----------------------------------------------------------------------------
 # cross compiler
 # ----------------------------------------------------------------------------
-CC_DIR := ~/tools/gcc-arm-none-eabi-8-2019-q3-update/bin
+CC_DIR ?= /mnt/w/GIT/xr806_sdk/tools/gcc-arm-none-eabi-8-2019-q3-update/bin
 CC_PREFIX := $(CC_DIR)/arm-none-eabi-
 
 AS      := $(CC_PREFIX)as
@@ -18,6 +18,7 @@ OBJCOPY := $(CC_PREFIX)objcopy
 OBJDUMP := $(CC_PREFIX)objdump
 SIZE    := $(CC_PREFIX)size
 STRIP   := $(CC_PREFIX)strip
+
 
 # ----------------------------------------------------------------------------
 # tools
@@ -91,7 +92,14 @@ endif
 CC_FLAGS = $(CPU) -c $(DBG_FLAG) -fno-common -fmessage-length=0 \
 	-fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer \
 	-Wall -Werror -Wno-cpp -Wpointer-arith -Wno-error=unused-function \
+	-Wno-unused-variable -Wno-incompatible-pointer-types \
+	-Wno-implicit-function-declaration -Wno-unused-but-set-variable \
+	-Wno-int-conversion -Wno-discarded-qualifiers	\
+	-Wno-format-truncation	\
 	-MMD -MP $(OPTIMIZE_FLAG)
+
+CC_FLAGS += -DPLATFORM_XR809=1
+CC_FLAGS += -DPLATFORM_XR806=1
 
 CC_FLAGS += -Wno-error=stringop-truncation -Wno-error=restrict
 
