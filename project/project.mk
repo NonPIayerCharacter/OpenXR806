@@ -584,7 +584,7 @@ endif
 	chmod a+r *.bin && \
 	$(CC) -E -P -CC $(CC_SYMBOLS) -I$(ROOT_PATH)/../include/generated -include autoconf.h -o $(PROJECT_IMG_CFG) - < $(IMAGE_CFG) && \
 	$(SIGNPACK_GEN_CERT) && \
-	chmod 777 $(IMAGE_TOOL) && ($(IMAGE_TOOL) $(IMAGE_TOOL_OPT) -c $(PROJECT_IMG_CFG) -o $(IMAGE_NAME).img || true) && \
+	chmod 777 $(IMAGE_TOOL) && \
 	$(IMAGE_TOOL) $(IMAGE_TOOL_OPT) -c $(PROJECT_IMG_CFG) -o $(IMAGE_NAME).img
 	@test -d "$(ROOT_PATH)/out" || mkdir -p "$(ROOT_PATH)/out"
 	$(CP) -t $(ROOT_PATH)/out/ $(IMAGE_PATH)/*.bin $(IMAGE_PATH)/$(IMAGE_NAME).img *.map

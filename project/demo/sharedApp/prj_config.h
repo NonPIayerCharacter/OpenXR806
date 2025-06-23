@@ -107,7 +107,7 @@ extern "C" {
 #define PRJCONF_UART_EN                 1
 
 /* h/w crypto engine enable/disable */
-#define PRJCONF_CE_EN                   0
+#define PRJCONF_CE_EN                   1
 
 /* spi enable/disable */
 #define PRJCONF_SPI_EN                  0
