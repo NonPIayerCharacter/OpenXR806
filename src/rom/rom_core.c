@@ -201,7 +201,9 @@ unsigned int ram_table[256] __attribute__((section(".ram_table"))) = {
 	RAM_TBL_SET(__wrap__malloc_r, __wrap__malloc_r),
 	RAM_TBL_SET(__wrap__realloc_r, __wrap__realloc_r),
 	RAM_TBL_SET(__wrap__free_r, __wrap__free_r),
+#if (CONFIG_MALLOC_MODE == 0x00)
 	RAM_TBL_SET(_sbrk, _sbrk),
+#endif
 	RAM_TBL_SET(__wrap_vprintf, __wrap_vprintf),
 	RAM_TBL_SET(__wrap_puts, __wrap_puts),
 	RAM_TBL_SET(__wrap_vfprintf, __wrap_vfprintf),

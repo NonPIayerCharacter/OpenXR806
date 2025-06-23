@@ -40,7 +40,7 @@ include $(ROOT_PATH)/config.mk
 # ----------------------------------------------------------------------------
 # options
 # ----------------------------------------------------------------------------
-QUIET ?= n
+QUIET ?= y
 OPTIMIZE := y
 MDK_DBG_EN := n
 HARDFP := n
@@ -60,7 +60,7 @@ endif
 ifeq ($(MDK_DBG_EN), y)
   DBG_FLAG := -gdwarf-2
 else
-  DBG_FLAG := -g
+  DBG_FLAG := -g0
 endif
 
 ifeq ($(HARDFP), y)
@@ -98,7 +98,6 @@ CC_FLAGS = $(CPU) -c $(DBG_FLAG) -fno-common -fmessage-length=0 \
 	-Wno-format-truncation	\
 	-MMD -MP $(OPTIMIZE_FLAG)
 
-CC_FLAGS += -DPLATFORM_XR809=1
 CC_FLAGS += -DPLATFORM_XR806=1
 
 CC_FLAGS += -Wno-error=stringop-truncation -Wno-error=restrict
@@ -218,16 +217,21 @@ PRJ_MAKE_RULES := $(ROOT_PATH)/project/project.mk
 # common rules of compiling objects
 # ----------------------------------------------------------------------------
 %.o: %.asm
+	@echo "compile_asm $<"
 	$(Q)$(CC) $(CPU) $(AS_SYMBOLS) -c -x assembler-with-cpp -o $@ $<
 
 %.o: %.s
+	@echo "compile_s $<"
 	$(Q)$(CC) $(CPU) $(AS_SYMBOLS) -c -x assembler-with-cpp -o $@ $<
 
 %.o: %.S
+	@echo "compile_S $<"
 	$(Q)$(CC) $(CPU) $(AS_SYMBOLS) -c -x assembler-with-cpp -o $@ $<
 
 %.o: %.c
+	@echo "compile_c $<"
 	$(Q)$(CC) $(CC_FLAGS) $(CC_SYMBOLS) -std=gnu99 $(INCLUDE_PATHS) -o $@ $<
 
 %.o: %.cpp
+	@echo "compile_cpp $<"
 	$(Q)$(CPP) $(CC_FLAGS) $(CC_SYMBOLS) -std=gnu++98 -fno-rtti $(INCLUDE_PATHS) -o $@ $<

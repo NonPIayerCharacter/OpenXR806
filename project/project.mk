@@ -438,8 +438,8 @@ $(PROJECT).$(ELF_EXT): lib $(OBJS)
 ifeq ($(CONFIG_TRUSTZONE), y)
 	cd $(ROOT_PATH)/src/trustzone && make && cd -
 endif
-	$(Q)$(CC) -E -P -CC $(CC_SYMBOLS) -I$(ROOT_PATH)/include -I$(ROOT_PATH)/lib/xradio_v$(CONFIG_CHIP_ARCH_VER) -include generated/autoconf.h -o $(PROJECT_LD) - < $(LINKER_SCRIPT) && \
-	$(Q)$(CC) $(LD_FLAGS) -T$(PROJECT_LD) $(LIBRARY_PATHS) -o $@ $(OBJS) $(LIBRARIES)
+	$(CC) -E -P -CC $(CC_SYMBOLS) -I$(ROOT_PATH)/include -I$(ROOT_PATH)/lib/xradio_v$(CONFIG_CHIP_ARCH_VER) -include generated/autoconf.h -o $(PROJECT_LD) - < $(LINKER_SCRIPT) && \
+	$(CC) $(LD_FLAGS) -T$(PROJECT_LD) $(LIBRARY_PATHS) -o $@ $(OBJS) $(LIBRARIES)
 
 %.bin: %.$(ELF_EXT)
 	$(Q)$(OBJCOPY) -O binary $(OBJCOPY_R_XIP) $(OBJCOPY_R_PSRAM) $(OBJCOPY_R_EXT) $< $@
@@ -517,7 +517,7 @@ else # CONFIG_BOOTLOADER
 
 install: $(PROJECT).bin
 	@mkdir -p $(IMAGE_PATH); \
-	$(Q)$(CP) $(PROJECT).bin $(IMAGE_PATH)/app.bin
+	$(CP) $(PROJECT).bin $(IMAGE_PATH)/app.bin
 ifeq ($(CONFIG_XIP), y)
 	$(Q)$(CP) $(PROJECT)$(SUFFIX_XIP).bin $(IMAGE_PATH)/app$(SUFFIX_XIP).bin
 endif
@@ -527,14 +527,13 @@ endif
 
 image: install
 	-@if ls $(BIN_PATH)/*.bin > /dev/null 2>&1; then \
-		$(Q)$(CP) -t $(IMAGE_PATH) $(BIN_FILES); \
+		$(CP) -t $(IMAGE_PATH) $(BIN_FILES); \
 	fi
 ifeq ($(CONFIG_BIN_COMPRESS), y)
-	cd $(IMAGE_PATH) && \
-	$(Q)$(XZ) $(XZ_BINS)
+	cd $(IMAGE_PATH) && $(XZ) $(XZ_BINS)
 endif
 ifeq ($(CONFIG_TRUSTZONE), y)
-	cd $(TZ_PARAMS_PATH) && \
+	@cd $(TZ_PARAMS_PATH) && \
 	chmod 777 $(TZ_PARAMS_SCRIPT) && ./$(TZ_PARAMS_SCRIPT) $(TZ_PARAMS_ORG) && cd - && \
 	mv $(TZ_PARAMS_PATH)/$(TZ_PARAMS_BIN) $(IMAGE_PATH)/
 	$(Q)$(CP) -t $(SIGN_PACKAGE_PATH) $(IMAGE_PATH)/$(TZ_PARAMS_BIN) $(IMAGE_PATH)/$(TZ_API_BIN)
@@ -583,22 +582,22 @@ endif
 
 	cd $(IMAGE_PATH) && \
 	chmod a+r *.bin && \
-	$(Q)$(CC) -E -P -CC $(CC_SYMBOLS) -I$(ROOT_PATH)/../include/generated -include autoconf.h -o $(PROJECT_IMG_CFG) - < $(IMAGE_CFG) && \
+	$(CC) -E -P -CC $(CC_SYMBOLS) -I$(ROOT_PATH)/../include/generated -include autoconf.h -o $(PROJECT_IMG_CFG) - < $(IMAGE_CFG) && \
 	$(SIGNPACK_GEN_CERT) && \
 	chmod 777 $(IMAGE_TOOL) && ($(IMAGE_TOOL) $(IMAGE_TOOL_OPT) -c $(PROJECT_IMG_CFG) -o $(IMAGE_NAME).img || true) && \
 	$(IMAGE_TOOL) $(IMAGE_TOOL_OPT) -c $(PROJECT_IMG_CFG) -o $(IMAGE_NAME).img
 	@test -d "$(ROOT_PATH)/out" || mkdir -p "$(ROOT_PATH)/out"
-	$(Q)$(CP) -t $(ROOT_PATH)/out/ $(IMAGE_PATH)/*.bin $(IMAGE_PATH)/$(IMAGE_NAME).img *.map
+	$(CP) -t $(ROOT_PATH)/out/ $(IMAGE_PATH)/*.bin $(IMAGE_PATH)/$(IMAGE_NAME).img *.map
 
 PHONY += image_xz
 image_xz:
 ifeq ($(CONFIG_OTA_POLICY_IMAGE_COMPRESSION), y)
-	cd $(IMAGE_PATH) && \
-	dd if=$(XZ_DEFAULT_IMG) of=$(XZ_DEFAULT_IMG).temp skip=$(BOOTLOADER_LENGTH) bs=1c && \
-	$(Q)$(XZ) $(XZ_DEFAULT_IMG).temp && \
-	mv $(XZ_DEFAULT_IMG).temp.xz image.xz && \
-	rm $(XZ_DEFAULT_IMG).temp && \
-	$(Q)$(CC) -E -P -CC $(CC_SYMBOLS) -I$(ROOT_PATH)/../include/generated -include autoconf.h -o $(PROJECT_IMG_XZ_CFG) - < $(IMAGE_XZ_CFG) && \
+	$(Q)cd $(IMAGE_PATH) && cp $(XZ_DEFAULT_IMG) /tmp/$(XZ_DEFAULT_IMG) && \
+	dd if=/tmp/$(XZ_DEFAULT_IMG) of=/tmp/$(XZ_DEFAULT_IMG).temp skip=$(BOOTLOADER_LENGTH) bs=1c && \
+	$(XZ) /tmp/$(XZ_DEFAULT_IMG).temp && \
+	mv /tmp/$(XZ_DEFAULT_IMG).temp.xz image.xz && \
+	rm /tmp/$(XZ_DEFAULT_IMG).temp && rm /tmp/$(XZ_DEFAULT_IMG) && \
+	$(CC) -E -P -CC $(CC_SYMBOLS) -I$(ROOT_PATH)/../include/generated -include autoconf.h -o $(PROJECT_IMG_XZ_CFG) - < $(IMAGE_XZ_CFG) && \
 	$(IMAGE_TOOL) $(IMAGE_TOOL_OPT) -c $(PROJECT_IMG_XZ_CFG) -o $(IMAGE_NAME)$(SUFFIX_IMG_XZ).img
 	@test -d "$(ROOT_PATH)/out" || mkdir -p "$(ROOT_PATH)/out"
 	$(Q)$(CP) -t $(ROOT_PATH)/out/ $(IMAGE_PATH)/$(IMAGE_NAME)$(SUFFIX_IMG_XZ).img
