@@ -23,6 +23,7 @@
 tools/settings_win.ini
 tools/config/mconf
 tools/config/conf
+tools/xpack-arm-none-eabi-gcc-8.3.1-1.4
 
 !/bin/xradio_*/**/*
 !/lib/xradio_*/**/*

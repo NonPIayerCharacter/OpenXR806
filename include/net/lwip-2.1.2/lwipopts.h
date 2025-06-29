@@ -352,7 +352,7 @@
  * If the application sends a lot of data out of ROM (or other static memory),
  * this should be set high.
  */
-#define MEMP_NUM_PBUF                   6
+#define MEMP_NUM_PBUF                   10
 
 /**
  * MEMP_NUM_RAW_PCB: Number of raw connection PCBs
@@ -618,28 +618,28 @@
  * this option does not affect outgoing packet sizes, which can be controlled
  * via IP_FRAG.
  */
-#define IP_REASSEMBLY                   1
+#define IP_REASSEMBLY                   0
 
 /**
  * IP_FRAG==1: Fragment outgoing IP packets if their size exceeds MTU. Note
  * that this option does not affect incoming packet sizes, which can be
  * controlled via IP_REASSEMBLY.
  */
-#define IP_FRAG                         1
+#define IP_FRAG                         0
 
 /**
  * IP_OPTIONS_ALLOWED: Defines the behavior for IP options.
  *      IP_OPTIONS_ALLOWED==0: All packets with IP options are dropped.
  *      IP_OPTIONS_ALLOWED==1: IP options are allowed (but not parsed).
  */
-#define IP_OPTIONS_ALLOWED              1
+//#define IP_OPTIONS_ALLOWED              1
 
 /**
  * IP_REASS_MAXAGE: Maximum time (in multiples of IP_TMR_INTERVAL - so seconds, normally)
  * a fragmented IP packet waits for all fragments to arrive. If not all fragments arrived
  * in this time, the whole packet is discarded.
  */
-#define IP_REASS_MAXAGE                 3
+//#define IP_REASS_MAXAGE                 3
 
 /**
  * IP_REASS_MAX_PBUFS: Total maximum amount of pbufs waiting to be reassembled.
@@ -649,7 +649,7 @@
  * When IPv4 *and* IPv6 are enabled, this even changes to
  * (PBUF_POOL_SIZE > 2 * IP_REASS_MAX_PBUFS)!
  */
-#define IP_REASS_MAX_PBUFS              7
+//#define IP_REASS_MAX_PBUFS              7
 
 /**
  * IP_DEFAULT_TTL: Default value for Time-To-Live used by transport layers.
@@ -661,13 +661,13 @@
  * filter per pcb on udp and raw send operations. To enable broadcast filter
  * on recv operations, you also have to set IP_SOF_BROADCAST_RECV=1.
  */
-#define IP_SOF_BROADCAST                1
+//#define IP_SOF_BROADCAST                1
 
 /**
  * IP_SOF_BROADCAST_RECV (requires IP_SOF_BROADCAST=1) enable the broadcast
  * filter on recv operations.
  */
-#define IP_SOF_BROADCAST_RECV           1
+//#define IP_SOF_BROADCAST_RECV           1
 
 /**
  * IP_FORWARD_ALLOW_TX_ON_RX_NETIF==1: allow ip_forward() to send packets back
@@ -1612,7 +1612,7 @@
  * to all local matches if SO_REUSEADDR is turned on.
  * WARNING: Adds a memcpy for every packet if passing to more than one pcb!
  */
-#define SO_REUSE_RXTOALL                0
+#define SO_REUSE_RXTOALL                1
 
 /**
  * LWIP_FIONREAD_LINUXMODE==0 (default): ioctl/FIONREAD returns the amount of
